@@ -12,7 +12,7 @@ category: [live media]
 &ensp;&ensp; 我在网络上找了一个rtsp的测试源，地址是rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp。然后打开Wireshark，
 设置wireshark的捕捉过滤器为`src or dst host 218.204.223.237`,开启捕获，用VLC打开前面rtsp的地址，将wireshark捕捉到的报文保存到文件。抓取到的结果如下： 
 
-！[rtsp_capture](https://github.com/taishanmayi/taishanmayi.github.io/raw/master/assets/img/rtsp/rtsp_capture.png)
+![rtsp_capture](https://github.com/taishanmayi/taishanmayi.github.io/raw/master/assets/img/rtsp/rtsp_capture.png)
 
 &ensp;&ensp; 在如上报文可以看出，在本机和218.204.223.237建立了TCP连接后，马上发送了OPTIONS,DESCRIBE,SETUP,PLAY几个请求到rtsp服务器，之后数据流开始传送。
 
