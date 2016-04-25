@@ -10,22 +10,27 @@ category: [live media]
 
 ### 2.使用Wireshark抓取RTSP报文
 &ensp;&ensp; 我在网络上找了一个rtsp的测试源，地址是rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp。然后打开Wireshark，
-设置wireshark的捕捉过滤器为`src or dst host 218.204.223.237`,开启捕获，用VLC打开前面rtsp的地址，将wireshark捕捉到的报文保存到文件。抓取到的结果如下：  
+设置wireshark的捕捉过滤器为`src or dst host 218.204.223.237`,开启捕获，用VLC打开前面rtsp的地址，将wireshark捕捉到的报文保存到文件。抓取到的结果如下： 
+
 ！[rtsp_capture](https://github.com/taishanmayi/taishanmayi.github.io/raw/master/assets/img/rtsp/rtsp_capture.png)
 
 &ensp;&ensp; 在如上报文可以看出，在本机和218.204.223.237建立了TCP连接后，马上发送了OPTIONS,DESCRIBE,SETUP,PLAY几个请求到rtsp服务器，之后数据流开始传送。
 
 ### 3.OPTIONS消息
 &ensp;&ensp; OPTIONS消息由client发出，用于向server请求server支持的方法，请求到这些方法后，client只能向server发送server支持的方法请求。
-![options_client](https://github.com/taishanmayi/taishanmayi.github.io/blob/master/assets/img/rtsp/rtsp_option.png)
+
+![options_client](https://github.com/taishanmayi/taishanmayi.github.io/raw/master/assets/img/rtsp/rtsp_option.png)
+
 &ensp;&ensp; client端发送的消息包括：
 
 + 1.request 方法：OPTION，地址是rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp。
 + 2.Cseq = 2   是标示发送该请求的序号，在client收到了来自server端的回复后，可以根据收到的Cseq来判断是针对哪一个请求的回复。
 + 3.User-Agent 代理的名称，这里填任何值都是可以的，没有具体的作用。  
 
-&ensp;&ensp; server端到clinet端的针对OPTION方法的回复如下图：  
+&ensp;&ensp; server端到clinet端的针对OPTION方法的回复如下图： 
+
 ![options_server](https://github.com/taishanmayi/taishanmayi.github.io/raw/master/assets/img/rtsp/rtsp_OPTIONS_server.png)
+
 &ensp;&ensp;其中：
 
 + 1.Response 状态码：标示针对发送的请求的状态,状态码的含义如下。  
@@ -115,6 +120,7 @@ category: [live media]
 
 ### 5.SETUP方法
 &ensp;&ensp; SETUP方法用于设置一些参数，通过Transport头字段列出可接受的传输选项，建立会话。
+
 ![setup_client](https://github.com/taishanmayi/taishanmayi.github.io/raw/master/assets/img/rtsp/rtsp_setup.png)
 
 &ensp;&ensp; 客户端发送的消息:
@@ -150,4 +156,5 @@ category: [live media]
 &ensp;&ensp; 本文抓取了一个rtsp视频流的运行过程的报文，只分析了其中的RTSP报文相关的几个方法，以便了解RTSP视频流传输的大概流程，而在RTSP视频传输过程中更为复杂的RTP和RTCP协议的通信
 过程，在后续有时间的时候会再做分析。
 &ensp;&ensp; 关于RTSP协议通信的过程，有同学绘制了一张流程图，放在此处，有助理解。
+
 ![rtsp](https://github.com/taishanmayi/taishanmayi.github.io/raw/master/assets/img/rtsp/rtsp.jpg)
